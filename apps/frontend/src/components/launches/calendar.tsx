@@ -57,6 +57,8 @@ import copy from 'copy-to-clipboard';
 import { stripHtmlValidation } from '@gitroom/helpers/utils/strip.html.validation';
 import { newDayjs } from '@gitroom/frontend/components/layout/set.timezone';
 import { Button } from '@gitroom/react/form/button';
+import { useSearchParams } from 'next/navigation';
+
 
 // Extend dayjs with necessary plugins
 extend(isSameOrAfter);
@@ -497,6 +499,42 @@ export const ListView = () => {
   // Use shared post actions hook
   const { editPost, deletePost, copyDebugJson, openStatistics, openMissingRelease } = usePostActions();
 
+
+
+const searchParams = useSearchParams();
+
+useEffect(() => {
+
+  const postId = searchParams.get('postId');
+
+  if (!postId || loading || listPosts.length === 0) return;
+
+  const post = listPosts.find(
+
+    (p: any) => String(p.id) === String(postId) || String(p.group) === String(postId)
+
+  );
+
+  if (!post) return;
+
+  editPost(post, false)();
+
+  const next = new URL(window.location.href);
+
+  next.searchParams.delete('postId');
+
+  window.history.replaceState({}, '', next.toString());
+
+}, [searchParams, loading, listPosts, editPost]);
+
+
+
+
+
+
+
+
+
   // Group posts by date
   const groupedPosts = useMemo(() => {
     const groups: { [key: string]: any[] } = {};
@@ -603,6 +641,45 @@ export const CalendarColumn: FC<{
 
   // Use shared post actions hook
   const { editPost, deletePost, copyDebugJson, openStatistics, openMissingRelease } = usePostActions();
+
+
+
+
+const searchParams = useSearchParams();
+
+useEffect(() => {
+
+  const postId = searchParams.get('postId');
+
+  if (!postId || loading || posts.length === 0) return;
+
+  const post = posts.find(
+
+    (p: any) => String(p.id) === String(postId) || String(p.group) === String(postId)
+
+  );
+
+  if (!post) return;
+
+  editPost(post, false)();
+
+  const next = new URL(window.location.href);
+
+  next.searchParams.delete('postId');
+
+  window.history.replaceState({}, '', next.toString());
+
+}, [searchParams, loading, posts, editPost]);
+
+
+
+
+
+
+
+
+
+
   const postList = useMemo(() => {
     return posts.filter((post) => {
       const pList = dayjs.utc(post.publishDate).local();
