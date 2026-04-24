@@ -517,13 +517,19 @@ useEffect(() => {
 
   if (!post) return;
 
-  editPost(post, false)();
+  if ((window as any).__postizDeepLinkOpened === postId) return;
 
+(window as any).__postizDeepLinkOpened = postId;
+
+editPost(post, false)();
+
+try {
   const next = new URL(window.location.href);
-
   next.searchParams.delete('postId');
-
   window.history.replaceState({}, '', next.toString());
+} catch (e) {
+  console.error('Failed to clear postId from URL', e);
+}
 
 }, [searchParams, loading, listPosts, editPost]);
 
@@ -659,15 +665,25 @@ useEffect(() => {
 
   );
 
-  if (!post) return;
+  if ((window as any).__postizDeepLinkOpened === postId) return;
 
-  editPost(post, false)();
+(window as any).__postizDeepLinkOpened = postId;
+
+editPost(post, false)();
+
+try {
 
   const next = new URL(window.location.href);
 
   next.searchParams.delete('postId');
 
   window.history.replaceState({}, '', next.toString());
+
+} catch (e) {
+
+  console.error('Failed to clear postId from URL', e);
+
+}
 
 }, [searchParams, loading, posts, editPost]);
 
