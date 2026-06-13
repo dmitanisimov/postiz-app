@@ -695,8 +695,8 @@ export const AddProviderComponent: FC<{
                 )}
               >
                 <div>
-                  {item.identifier === 'youtube' ? (
-                    <img src={`/icons/platforms/youtube.svg`} />
+                  {['youtube', 'tenchat'].includes(item.identifier) ? (
+                    <img src={`/icons/platforms/${item.identifier}.svg`} />
                   ) : (
                     <img
                       className={clsx(

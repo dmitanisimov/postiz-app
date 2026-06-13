@@ -110,6 +110,11 @@ export type PostDetails<T = any> = {
   id: string;
   message: string;
   settings: T;
+  integrationId?: string;
+  organizationId?: string;
+  scheduledAt?: Date | string;
+  createdAt?: Date | string;
+  group?: string;
   media?: MediaContent[];
   poll?: PollDetails;
 };

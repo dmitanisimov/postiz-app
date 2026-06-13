@@ -41,7 +41,6 @@ function slimPost(post: any) {
     parentPostId,
     approvedSubmitForOrder,
     deletedAt,
-    createdAt,
     updatedAt,
     payoutProblems,
     comments,
@@ -184,6 +183,11 @@ export class PostActivity {
       await Promise.all(
         (newPosts || []).map(async (p) => ({
           id: p.id,
+          integrationId: p.integrationId,
+          organizationId: p.organizationId,
+          scheduledAt: p.publishDate,
+          createdAt: p.createdAt,
+          group: p.group,
           message: stripHtmlValidation(
             getIntegration.editor,
             p.content,
@@ -231,6 +235,11 @@ export class PostActivity {
       await Promise.all(
         (newPosts || []).map(async (p) => ({
           id: p.id,
+          integrationId: p.integrationId,
+          organizationId: p.organizationId,
+          scheduledAt: p.publishDate,
+          createdAt: p.createdAt,
+          group: p.group,
           message: stripHtmlValidation(
             getIntegration.editor,
             p.content,
