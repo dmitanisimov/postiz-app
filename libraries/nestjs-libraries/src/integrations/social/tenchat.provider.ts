@@ -62,7 +62,7 @@ export class TenChatProvider extends SocialAbstract implements SocialProvider {
       accessToken: process.env.TENCHAT_WEBHOOK_SECRET || 'tenchat',
       refreshToken: '',
       expiresIn: dayjs().add(200, 'year').unix() - dayjs().unix(),
-      picture: '/icons/platforms/tenchat.svg',
+      picture: '',
       username: 'tenchat',
     };
   }
